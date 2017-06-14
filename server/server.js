@@ -30,9 +30,34 @@ const initialLocations = [
 ];
 
 app.locals.idIndex = 3;
+let { idIndex } = app.locals;
 app.locals.locations = initialLocations;
 
 app.get('/locations', (request, response) => response.send({ locations: app.locals.locations }));
+
+app.post('/locations', (request, response) => {
+  const { location } = request.body;
+  const { locations } = app.locals;
+
+  if (!location.name) {
+    response.status(400).send({
+      error: "Location not saved. You must enter a name."
+    })
+  } else if (!location.lat) {
+    response.status(400).send({
+      error: "Location not saved. You must enter a latitude coordinate."
+    });
+  } else if (!location.lng) {
+    response.status(400).send({
+      error: "Location was not saved. You must enter a longitude coordinate." 
+    });
+  } else {
+    idIndex = idIndex += 1;
+    location.id = "id" + idIndex;
+    locations.push(location);
+    response.status(201).send(locations);
+  }
+})
 
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
