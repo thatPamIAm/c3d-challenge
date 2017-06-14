@@ -69,7 +69,7 @@ class Form extends Component {
           onClick={(e) => this.submitForm(e, {
             name: this.name.value,
             lat: this.lat.value,
-            lng: this.lng.value,
+            lng: this.lng.value
           })}
         >
             Save
