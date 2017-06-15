@@ -29,11 +29,24 @@ const initialLocations = [
   },
 ];
 
+const initialCoordinates = []
+
+
 app.locals.idIndex = 3;
 let { idIndex } = app.locals;
+
 app.locals.locations = initialLocations;
+app.locals.dbCoordinates = initialCoordinates;
+
+function removeDuplicate(dup) {
+  let filteredDb = initialCoordinates.filter(obj => {
+    return !(obj.lat === dup.lat && obj.lng === dup.lng)
+  })
+  return filteredDb
+}
 
 app.get('/locations', (request, response) => response.send({ locations: app.locals.locations }));
+app.get('/coordinates', (request, response) => response.send({ coordinates: app.locals.dbCoordinates}))
 
 app.post('/locations', (request, response) => {
   const { location } = request.body;
@@ -49,7 +62,7 @@ app.post('/locations', (request, response) => {
     });
   } else if (!location.lng) {
     response.status(400).send({
-      error: "Location was not saved. You must enter a longitude coordinate." 
+      error: "Location was not saved. You must enter a longitude coordinate."
     });
   } else {
     idIndex = idIndex += 1;
@@ -57,6 +70,21 @@ app.post('/locations', (request, response) => {
     locations.push(location);
     response.status(201).send(locations);
   }
+})
+
+app.post('/coordinates', (request, response) => {
+  const { coordinates } = request.body;
+  let { dbCoordinates } = app.locals;
+  dbCoordinates.push(coordinates);
+  response.status(201).send(dbCoordinates);
+})
+
+app.delete('/coordinates', (request, response) => {
+  const { coordinates } = request.body;
+  let { dbCoordinates } = app.locals;
+
+  dbCoordinates = removeDuplicate(coordinates);
+  response.status(200).send(dbCoordinates);
 })
 
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
