@@ -4,9 +4,11 @@ import L from 'leaflet'
 import tealdot from '../imgs/tealdot.svg'
 
 class MapMarker extends Component {
+
   grabLocation(e) {
-    let { lat, lng } = e.target._latlng;
-    this.props.updateCoordinates(lat, lng)
+    const { lat, lng } = e.target._latlng;
+    const coordinatesObject = {lat, lng}
+    this.props.saveClickCoordinates(coordinatesObject)
   }
 
   render() {
