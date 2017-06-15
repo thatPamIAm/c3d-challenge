@@ -60,7 +60,6 @@ const saveLocation = (location) => {
 }
 
 const storeCoordinates = (coordinates) => {
-  console.log(coordinates)
   return {
     type: 'STORE_COORDINATES',
     data: coordinates
@@ -79,17 +78,24 @@ const saveCoordinates = (coordinates) => {
   }
 }
 
+const deleteCoordinates = (coordinates) => {
+  return {
+    type: 'DELETE_COORDINATES',
+    data: coordinates
+  }
+}
+
 const removeCoordinates = (coordinates) => {
-  console.log('in action to remove', coordinates)
-  return(dispatch => {
+  return(dispatch) => {
     return fetch('/coordinates', {
       method: 'DELETE',
       headers: {'Content-Type': 'application/json'},
+      Accept: 'application/json',
         body: JSON.stringify({ coordinates }),
     })
     .then(response => response.json())
-    .then(coordinates => console.log(coordinates))
-  })
+    .then(updatedCoords => dispatch(deleteCoordinates(updatedCoords)));
+  }
 }
 
 export
