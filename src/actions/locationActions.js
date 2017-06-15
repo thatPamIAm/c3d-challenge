@@ -1,6 +1,5 @@
 require('isomorphic-fetch');
 
-
 const storeAllLocations = (locations) => {
   return {
     type: 'STORE_LOCATIONS',
@@ -18,6 +17,26 @@ const fetchAllLocations = () => {
     })
       .then(locations => locations.json())
       .then(json => dispatch(storeAllLocations(json)));
+  };
+};
+
+const storeAllCoordinates = (coordinates) => {
+  return {
+    type: 'STORE_ALL_COORDINATES',
+    data: coordinates.coordinates,
+  };
+};
+
+const getAllCoordinates = () => {
+  return (dispatch) => {
+    return fetch('/coordinates', {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    })
+      .then(coordinates => coordinates.json())
+      .then(json => dispatch(storeAllCoordinates(json)));
   };
 };
 
@@ -40,4 +59,43 @@ const saveLocation = (location) => {
   }
 }
 
-export { fetchAllLocations, saveLocation }
+const storeCoordinates = (coordinates) => {
+  console.log(coordinates)
+  return {
+    type: 'STORE_COORDINATES',
+    data: coordinates
+  }
+}
+
+const saveCoordinates = (coordinates) => {
+  return (dispatch) => {
+    return fetch('/coordinates', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ coordinates }),
+    })
+    .then(response => response.json())
+    .then(coordinates => dispatch(storeCoordinates(coordinates)));
+  }
+}
+
+const removeCoordinates = (coordinates) => {
+  console.log('in action to remove', coordinates)
+  return(dispatch => {
+    return fetch('/coordinates', {
+      method: 'DELETE',
+      headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ coordinates }),
+    })
+    .then(response => response.json())
+    .then(coordinates => console.log(coordinates))
+  })
+}
+
+export
+{ fetchAllLocations,
+  saveLocation,
+  saveCoordinates,
+  removeCoordinates,
+  getAllCoordinates
+}
