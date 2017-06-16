@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import '../style/App.css';
-import { fetchAllLocations, getAllCoordinates } from '../actions/locationActions';
+import { fetchAllLocations, getAllCoordinates } from '../actions/actions';
 import App from '../components/App';
 
 const mapStateToProps = (state) => {

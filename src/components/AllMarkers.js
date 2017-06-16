@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Polygon } from 'react-leaflet';
-import MapMarker from './Marker'
+import MapMarker from './Marker';
 
 class AllMarkers extends Component {
 

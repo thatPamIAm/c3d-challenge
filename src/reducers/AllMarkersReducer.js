@@ -12,7 +12,7 @@ const Coordinates = (state = initialState, action) => {
     case 'STORE_COORDINATES':
       return Object.assign({}, state, { data: action.data });
     case 'DELETE_COORDINATES':
-      return Object.assign({}, state, { data: action.data })
+      return Object.assign({}, state, { data: action.data });
     default:
       return state;
   }

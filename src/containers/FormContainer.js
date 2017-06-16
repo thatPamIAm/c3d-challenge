@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Form from '../components/Form';
-import { saveLocation } from '../actions/locationActions';
+import { saveLocation } from '../actions/actions';
 
 const mapStateToProps = (state) => {
   return {};

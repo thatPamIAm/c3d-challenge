@@ -10,7 +10,7 @@ const Locations = (state = initialState, action) => {
         data: state.data.concat(action.data),
       });
     case 'STORE_LOCATION':
-      return Object.assign({}, state, { data: action.data })
+      return Object.assign({}, state, { data: action.data });
     default:
       return state;
   }
