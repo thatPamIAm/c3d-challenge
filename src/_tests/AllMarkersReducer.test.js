@@ -25,7 +25,7 @@ describe('Coordinates reducer', () => {
         lat: 34.052235,
         lng: -118.243683
       }
-    ]
+    ];
 
     expect(Coordinates(undefined, {
       type: 'STORE_ALL_COORDINATES',
@@ -35,7 +35,7 @@ describe('Coordinates reducer', () => {
 
   it('should return the submitted coordinates when action is STORE_COORDINATES', () => {
 
-    const coordinates = [{lat: 39.742043, lng: -104.991531}]
+    const coordinates = [{lat: 39.742043, lng: -104.991531}];
 
     expect(Coordinates(undefined, {
       type: 'STORE_COORDINATES',
@@ -54,7 +54,7 @@ describe('Coordinates reducer', () => {
         lat: 42.364506,
         lng: -71.038887
       }
-    ]
+    ];
 
     expect(Coordinates(undefined, {
       type: 'DELETE_COORDINATES',
