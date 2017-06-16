@@ -26,23 +26,4 @@ describe('Locations reducer', () => {
       data: fakeLocations })).toEqual({data: fakeLocations});
     expect(fakeLocations.length).toEqual(3);
   });
-
-  // it('should return an array without the deleted coordinates when action is DELETE_COORDINATES', () => {
-  //
-  //   const coordinates = [
-  //     {
-  //       lat: 39.742043,
-  //       lng: -104.991531
-  //     },
-  //     {
-  //       lat: 42.364506,
-  //       lng: -71.038887
-  //     }
-  //   ]
-  //
-  //   expect(Coordinates(undefined, {
-  //     type: 'DELETE_COORDINATES',
-  //     data: coordinates })).toEqual({data: coordinates});
-  //   expect(coordinates.length).toEqual(2);
-  // });
 });
