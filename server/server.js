@@ -31,15 +31,18 @@ const initialLocations = [
 
 const initialCoordinates = []
 
+
 app.locals.idIndex = 3;
 let { idIndex } = app.locals;
 
 app.locals.locations = initialLocations;
 app.locals.dbCoordinates = initialCoordinates;
+let { dbCoordinates } = app.locals;
 
 // Function for use in delete route - removing requested coordinates
 function removeDuplicate(dup) {
-  let filteredDb = initialCoordinates.filter(obj => {
+
+  let filteredDb = dbCoordinates.filter(obj => {
     return !(obj.lat === dup.lat && obj.lng === dup.lng);
   })
   return filteredDb;
@@ -47,7 +50,7 @@ function removeDuplicate(dup) {
 
 // GET requests for all locations and coordinates
 app.get('/locations', (request, response) => response.send({ locations: app.locals.locations }));
-app.get('/coordinates', (request, response) => response.send({ coordinates: app.locals.dbCoordinates}));
+app.get('/coordinates', (request, response) => response.send({ coordinates: dbCoordinates}));
 
 // POST requests for adding single location
 app.post('/locations', (request, response) => {
@@ -77,7 +80,6 @@ app.post('/locations', (request, response) => {
 // POST request for adding single set of coordinates
 app.post('/coordinates', (request, response) => {
   const { coordinates } = request.body;
-  let { dbCoordinates } = app.locals;
 
   dbCoordinates.push(coordinates);
   response.status(201).send(dbCoordinates);
@@ -85,7 +87,6 @@ app.post('/coordinates', (request, response) => {
 
 app.delete('/coordinates', (request, response) => {
   const { coordinates } = request.body;
-  let { dbCoordinates } = app.locals;
 
   dbCoordinates = removeDuplicate(coordinates);
   response.status(200).send(dbCoordinates);
