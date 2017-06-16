@@ -17,5 +17,5 @@ const Coordinates = (state = initialState, action) => {
       return state;
   }
 };
-//asdfadsf
+
 export default Coordinates;
