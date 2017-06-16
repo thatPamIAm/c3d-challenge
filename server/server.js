@@ -7,7 +7,7 @@ const path = require('path');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-// Get all users
+// Initial Locations and Coordinates for app.locals
 const initialLocations = [
   {
     id: 'id1',
@@ -31,23 +31,25 @@ const initialLocations = [
 
 const initialCoordinates = []
 
-
 app.locals.idIndex = 3;
 let { idIndex } = app.locals;
 
 app.locals.locations = initialLocations;
 app.locals.dbCoordinates = initialCoordinates;
 
+// Function for use in delete route - removing requested coordinates
 function removeDuplicate(dup) {
   let filteredDb = initialCoordinates.filter(obj => {
-    return !(obj.lat === dup.lat && obj.lng === dup.lng)
+    return !(obj.lat === dup.lat && obj.lng === dup.lng);
   })
-  return filteredDb
-}
+  return filteredDb;
+};
 
+// GET requests for all locations and coordinates
 app.get('/locations', (request, response) => response.send({ locations: app.locals.locations }));
-app.get('/coordinates', (request, response) => response.send({ coordinates: app.locals.dbCoordinates}))
+app.get('/coordinates', (request, response) => response.send({ coordinates: app.locals.dbCoordinates}));
 
+// POST requests for adding single location
 app.post('/locations', (request, response) => {
   const { location } = request.body;
   const { locations } = app.locals;
@@ -70,14 +72,16 @@ app.post('/locations', (request, response) => {
     locations.push(location);
     response.status(201).send(locations);
   }
-})
+});
 
+// POST request for adding single set of coordinates
 app.post('/coordinates', (request, response) => {
   const { coordinates } = request.body;
   let { dbCoordinates } = app.locals;
+
   dbCoordinates.push(coordinates);
   response.status(201).send(dbCoordinates);
-})
+});
 
 app.delete('/coordinates', (request, response) => {
   const { coordinates } = request.body;
@@ -85,7 +89,7 @@ app.delete('/coordinates', (request, response) => {
 
   dbCoordinates = removeDuplicate(coordinates);
   response.status(200).send(dbCoordinates);
-})
+});
 
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
