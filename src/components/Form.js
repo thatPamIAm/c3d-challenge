@@ -9,8 +9,8 @@ class Form extends Component {
   }
   submitForm(e, data) {
     e.preventDefault();
-    this.clearInputFields()
-    if(this.validateCoordinates(data) && this.name.value) {
+    this.clearFields()
+    if(this.validateCoordinates(data) && data.name) {
       let normalizedData = this.parseLatAndLong(data);
       this.props.saveLocation(normalizedData);
     } else {
@@ -27,11 +27,11 @@ class Form extends Component {
   }
 
   validateLatitude(lat) {
-    return isFinite(lat) && Math.abs(lat) <= 90;
+    return isFinite(lat) && Math.abs(lat) <= 90 && lat
   }
 
   validateLongitude(lng) {
-    return isFinite(lng) && Math.abs(lng) <= 180;
+    return isFinite(lng) && Math.abs(lng) <= 180 && lng
   }
 
   validateCoordinates(data) {
@@ -40,12 +40,15 @@ class Form extends Component {
     } else {
       return false
     }
-  };
+  }
 
-  clearInputFields(){
-    this.name.value = ''
-    this.lat.value = ''
-    this.lng.value = ''
+  clearFields(){
+    this.name.value = '';
+    this.lat.value = '';
+    this.lng.value = '';
+      this.setState({
+        error: ''
+      })
   }
 
   render() {
