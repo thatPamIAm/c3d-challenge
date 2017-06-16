@@ -1,14 +1,22 @@
 import React, { Component } from 'react';
 
 class Form extends Component {
-
+  constructor() {
+    super()
+    this.state = {
+      error: ''
+    }
+  }
   submitForm(e, data) {
     e.preventDefault();
     this.clearInputFields()
-    if(this.validateCoordinates(data)) {
+    if(this.validateCoordinates(data) && this.name.value) {
       let normalizedData = this.parseLatAndLong(data);
       this.props.saveLocation(normalizedData);
     } else {
+      this.setState({
+        error: 'Valid name, latitude, and longitude must be entered. Please try again.'
+      });
       console.log('Lat, Long, or name invalid');
     }
   }
@@ -42,6 +50,8 @@ class Form extends Component {
   }
 
   render() {
+    const{ error} = this.state
+    console.log(error)
     return (
       <form className="form">
         <label>
@@ -74,6 +84,7 @@ class Form extends Component {
         >
             Save
         </button>
+        { error && <h2 className='error'>{ error }</h2>}
       </form>
     );
   }
