@@ -17,7 +17,6 @@ class Form extends Component {
       this.setState({
         error: 'Valid name, latitude, and longitude must be entered. Please try again.'
       });
-      console.log('Lat, Long, or name invalid');
     }
   }
 
@@ -51,7 +50,6 @@ class Form extends Component {
 
   render() {
     const{ error} = this.state
-    console.log(error)
     return (
       <form className="form">
         <label>
