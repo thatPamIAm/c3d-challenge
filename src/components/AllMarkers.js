@@ -7,10 +7,11 @@ import MapMarker from './Marker';
 class AllMarkers extends Component {
 
   saveClickCoordinates(coordinates) {
-    if (!this.props.coordinates.length)
+    if (!this.props.coordinates.length){
       this.props.saveCoordinates(coordinates)
-    if (this.props.coordinates.length)
+    } else {
       this.checkForDuplicates(coordinates)
+    }
   }
 
   checkForDuplicates(coordinates) {
@@ -26,7 +27,7 @@ class AllMarkers extends Component {
       if (state.lat === newCoords.lat && state.lng === newCoords.lng) {
         acc = [state]
       }
-    return acc
+      return acc
     },[])
   }
 
